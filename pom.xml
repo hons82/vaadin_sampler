@@ -33,11 +33,8 @@
         </repository>
         <!-- Repository used by many Vaadin add-ons -->
         <repository>
-            <id>Vaadin Directory</id>
+            <id>vaadin-addons</id>
             <url>https://maven.vaadin.com/vaadin-addons</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
@@ -68,7 +65,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
-            <artifactId>vaadin</artifactId>
+            <artifactId>vaadin-core</artifactId>
             <exclusions>
                 <!-- Webjars are only needed when running in Vaadin 13 compatibility mode -->
                 <exclusion>
@@ -112,6 +109,12 @@
             <groupId>org.vaadin.artur</groupId>
             <artifactId>a-vaadin-helper</artifactId>
             <version>1.7.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin.addons.componentfactory</groupId>
+            <artifactId>autosuggest</artifactId>
+            <version>1.1.2</version>
         </dependency>
 
         <dependency>
