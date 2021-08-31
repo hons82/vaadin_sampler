@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.example.application.views.autosuggest.AutosuggestView;
 import com.example.application.views.gridwithinline.GridwithInlineView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -104,8 +105,9 @@ public class MainLayout extends AppLayout {
 	}
 
 	private List<Tab> createMenuItems() {
-		MenuItemInfo[] menuItems = new MenuItemInfo[] { //
-			new MenuItemInfo("Grid with Inline", "la la-file", GridwithInlineView.class), //
+		MenuItemInfo[] menuItems = new MenuItemInfo[] {
+			new MenuItemInfo("Autosuggest", "la la-file", AutosuggestView.class),
+			new MenuItemInfo("Grid with Inline", "la la-file", GridwithInlineView.class),
 		};
 		List<Tab> tabs = new ArrayList<>();
 		for (MenuItemInfo menuItemInfo : menuItems) {

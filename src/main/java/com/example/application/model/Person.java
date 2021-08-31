@@ -2,7 +2,7 @@ package com.example.application.model;
 
 import java.time.LocalDate;
 
-public class Person implements Cloneable {
+public class Person extends Object implements Cloneable {
 	public enum MaritalStatus {
 		MARRIED,
 		SINGLE

@@ -4,6 +4,7 @@ import com.example.application.model.Person;
 import com.example.application.model.Person.MaritalStatus;
 import com.example.application.service.PersonService;
 import com.example.application.views.MainLayout;
+import com.example.application.views.autosuggest.Autosuggest;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -17,7 +18,6 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,11 +25,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.WeakHashMap;
 
-import org.vaadin.addons.componentfactory.Autosuggest;
-
 @PageTitle("Grid with Inline")
 @Route(value = "grid_inline", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class GridwithInlineView extends Composite<VerticalLayout> {
 
 	public GridwithInlineView() {
