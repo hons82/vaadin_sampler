@@ -74,6 +74,10 @@ public class Person extends Object implements Cloneable {
 		this.lastName = lastName;
 	}
 
+	public String getFullName() {
+		return firstName + ", " + lastName;
+	}
+
 	public int getAge() {
 		return age;
 	}

@@ -18,19 +18,29 @@ import java.util.List;
 @RouteAlias(value = "", layout = MainLayout.class)
 public class AutosuggestView extends Composite<VerticalLayout> {
 
+	private final PersonService personService;
+
 	public AutosuggestView() {
+		personService = new PersonService();
 	}
 
-	private static List<Person> getItems() {
-		PersonService personService = new PersonService();
+	private List<Person> getItems() {
 		return personService.fetchAll();
 	}
 
 	@Override
 	protected VerticalLayout initContent() {
 
+		long startTime = System.currentTimeMillis();
+
 		var autosuggest1 = new Autosuggest<Person>(5);
+
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("ExecutionTime: " + elapsedTime + " ms for CONSTRUCTOR");
+
 		autosuggest1.setOpenDropdownOnClick(true);
+		autosuggest1.setDefaultOption("", "Default!", "Default! + uselessSearchStr");
 		autosuggest1.setItems(getItems());
 
 		Div testElement = new Div(new Span("IT WORKED !!!!"));
@@ -43,3 +53,4 @@ public class AutosuggestView extends Composite<VerticalLayout> {
 	}
 
 }
+
