@@ -19,6 +19,7 @@ import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-list-box';
 import '@vaadin/vaadin-item';
 import '@vaadin/vaadin-overlay';
+import '@polymer/iron-icon/iron-icon.js';
 import './vcf-autosuggest-overlay';
 
 /**
@@ -55,6 +56,7 @@ class VcfAutosuggest extends LitElement {
             customItemTemplate: { type: String },
             inputValue: { type: String },
             options: { type: Array },
+            dropdownEndActions: { type: Array},
             optionsForWhenValueIsNull: { type: Array },
             defaultOption: { type: Object },
 
@@ -83,7 +85,7 @@ class VcfAutosuggest extends LitElement {
     render() {
          return html`
             <div class="container">
-                <vaadin-text-field id="textField" @focus="${this._textFieldFocused}"></vaadin-text-field>
+                <slot name="textField"></slot>
                 <vcf-autosuggest-overlay id="autosuggestOverlay">
                     <vaadin-list-box id="optionsContainer" part="options-container" style="margin: 0;">
                         ${this.loading
@@ -94,8 +96,7 @@ class VcfAutosuggest extends LitElement {
                                     ? this.renderInputLengthBelowMinimum()
                                     : this.renderOptions()))}
                     </vaadin-list-box>
-                    <div id="dropdownEndSlot" part="dropdown-end-slot" style="padding-left: 0.5em; padding-right: 0.5em;">
-                    </div>
+                    ${this.renderDropdownEnd()}
                 </vcf-autosuggest-overlay>
             </div>
          `;
@@ -130,14 +131,36 @@ class VcfAutosuggest extends LitElement {
             ${this._optionsToDisplay.map( (option) =>
                 typeof this.customItemTemplate === 'undefined' || this.customItemTemplate == null
                 ? html`
-                <vaadin-item @click="${this._optionClicked}" part="option" data-oid="${option.optId}" data-key="${option.key}">
-                    ${this._getSuggestedStart(this.inputValue, option)}<span part="bold">${this._getInputtedPart(this.inputValue, option)}</span>${this._getSuggestedEnd(this.inputValue, option)}
-                </vaadin-item>
+                    <vaadin-item @click="${this._optionClicked}" part="option" data-oid="${option.optId}" data-key="${option.key}">
+                        ${this._getSuggestedStart(this.inputValue, option)}<span part="bold">${this._getInputtedPart(this.inputValue, option)}</span>${this._getSuggestedEnd(this.inputValue, option)}
+                    </vaadin-item>
                 `
                 : html`
-                <vaadin-item @click="${this._optionClicked}" part="option" data-oid="${option.optId}" data-key="${option.key}" data-tag="autosuggestOverlayItem"></vaadin-item>
+                    <vaadin-item @click="${this._optionClicked}" part="option" data-oid="${option.optId}" data-key="${option.key}" data-tag="autosuggestOverlayItem"></vaadin-item>
                 `
             )}
+        `;
+    }
+
+    renderDropdownEnd() {
+        return html`
+            <div id="dropdownEndSlot">
+            ${this.dropdownEndActions != null && this.dropdownEndActions.length > 0
+                ? html`
+                    <vaadin-horizontal-layout part="dropdown-end-slot" style="padding-left: 0.5em; padding-right: 0.5em;" theme="spacing">
+                        ${this.dropdownEndActions.map( (action, index) =>
+                            html`
+                            <vaadin-button ?disabled=${action.disabled} @click="${this._actionClicked}" data-index="${index}" tabindex="-1" title="${action.label}" theme="${action.styles}" role="button">
+                            ${action.icon != null && action.icon.length > 0 ? html`<iron-icon icon="${action.icon}" slot="prefix"></iron-icon>` : null}
+                            ${action.label}
+                            </vaadin-button>
+                            `
+                        )}
+                    </vaadin-horizontal-layout>
+                `
+                : null
+            }
+            </div>
         `;
     }
 
@@ -147,6 +170,7 @@ class VcfAutosuggest extends LitElement {
         this.options = [];
         this._optionsToDisplay = [];
         this.optionsForWhenValueIsNull = [];
+        this.dropdownEndActions = [];
         this.searchMatchingMode = 'STARTS_WITH';
         this._boundSetOverlayPosition = this._setOverlayPosition.bind(this);
         this._boundOutsideClickHandler = this._outsideClickHandler.bind(this);
@@ -158,18 +182,19 @@ class VcfAutosuggest extends LitElement {
     }
 
     firstUpdated() {
-        this._textField = this.shadowRoot.getElementById('textField');
+        this._textField = this.shadowRoot.querySelector('slot[name=textField]').assignedNodes({flatten: true})[0];
         this._textField.addEventListener('input', this._onInput.bind(this));
-        this.addEventListener('iron-resize', this._boundSetOverlayPosition);
-        this.addEventListener('click', this._elementClickListener);
-        this.addEventListener('blur', this._elementBlurListener);
-        this.addEventListener('keydown', this._onKeyDown.bind(this));
+        this._textField.addEventListener('focus', this._textFieldFocused());
         this._overlayElement = this.shadowRoot.getElementById('autosuggestOverlay');
         this._overlayElement.addEventListener('vaadin-overlay-outside-click', ev => { this._cancelEvent(ev); });
         this._optionsContainer = this.shadowRoot.getElementById('optionsContainer');
         this._dropdownEndSlot = this.shadowRoot.getElementById('dropdownEndSlot');
         this._dropdownEndSlot.addEventListener('click', ev => { this._cancelEvent(ev); });
         this._defaultOptionChanged(this.defaultOption);
+        this.addEventListener('iron-resize', this._boundSetOverlayPosition);
+        this.addEventListener('click', this._elementClickListener);
+        this.addEventListener('blur', this._elementBlurListener);
+        this.addEventListener('keydown', this._onKeyDown.bind(this));
         if (this._noResultsMsg) this.setNoResultsMessage(this._noResultsMsg);
         if (this._inputLengthBelowMinimumMsg) this.setInputLengthBelowMinimumMessage(this._inputLengthBelowMinimumMsg);
     }
@@ -191,8 +216,8 @@ class VcfAutosuggest extends LitElement {
                 this._openedChange(newValue === 'true');
             } else if (propName == 'options') {
                 this._refreshOptionsToDisplay(this.options, this.input);
-			} else if (propName == 'defaultOption') {
-				this._defaultOptionChanged(this.defaultOption);
+            } else if (propName == 'defaultOption') {
+                this._defaultOptionChanged(this.defaultOption);
             } else if (propName == '_optionsToDisplay') {
                 this._optionsToDisplayChanged(this._optionsToDisplay, this.opened);
             }
@@ -285,6 +310,13 @@ class VcfAutosuggest extends LitElement {
 
     _optionClicked(ev) {
         this._applyValue(ev.target.dataset.key);
+    }
+
+    _actionClicked(ev) {
+        this.$server.actionClicked(ev.target.dataset.index);
+        this._textFieldFocus(false);
+        this.opened = false;
+        this._cancelEvent(ev);
     }
 
     _applyValue(value, keepDropdownOpened=false) {
@@ -391,7 +423,7 @@ class VcfAutosuggest extends LitElement {
                 _res.unshift({label: this.defaultOption.label, searchStr: this.defaultOption.searchStr, key: this.defaultOption.key});
         }
 
-        for(let i=0; i<_res.length; i++) { _res[i].optId = i; }
+        for (let i=0; i<_res.length; i++) { _res[i].optId = i; }
         this._optionsToDisplay = _res;
         this._loadingChanged(false);
     }

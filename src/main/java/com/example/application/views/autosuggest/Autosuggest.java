@@ -42,10 +42,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.dom.Element;
@@ -53,6 +51,7 @@ import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.internal.JsonSerializer;
 import com.vaadin.flow.shared.Registration;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +62,7 @@ import java.util.stream.Collectors;
 @Tag("vcf-autosuggest")
 @JsModule("./components/vcf-autosuggest.js")
 @CssImport("./components/vcf-autosuggest.css")
-public class Autosuggest<T> extends LitTemplate implements HasTheme, HasSize, Focusable<Autosuggest<T>>, HasValidation,
+public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focusable<Autosuggest<T>>, HasValidation,
     HasComponents
 {
     public enum SearchMatchingMode { STARTS_WITH, CONTAINS }
@@ -100,24 +99,58 @@ public class Autosuggest<T> extends LitTemplate implements HasTheme, HasSize, Fo
         public String getSearchStr() { return this.fOption.getSearchStr(); }
     }
 
+    public static class Action {
+        @FunctionalInterface
+        public interface ActionListener {
+            void actionClicked(int index);
+        }
+
+        private final String label;
+        private final String icon;
+        private final String styles;
+        private final ActionListener listener;
+        private boolean disabled;
+
+
+        public Action(String label, String icon, String styles, ActionListener listener) {
+            this.label = label;
+            this.icon = icon;
+            this.styles = styles;
+            this.listener = listener;
+            this.disabled = false;
+        }
+
+        public String getLabel() { return this.label; }
+        public String getIcon() { return this.icon; }
+        public String getStyles() { return this.styles; }
+        public boolean isDisabled() { return this.disabled; }
+        public void setDisabled(boolean disabled) { this.disabled = disabled; }
+    }
+
+
     public interface LazyProviderFunction {}
 
+    @FunctionalInterface
     public interface LazyProviderFunctionSimple<T> extends LazyProviderFunction {
         List<T> refresh(String searchQ);
     }
 
+    @FunctionalInterface
     public interface LazyProviderFunctionMap<T> extends LazyProviderFunction {
         Map<String, T> refresh(String searchQ);
     }
 
+    @FunctionalInterface
     public interface KeyGenerator<T> {
         String generate(T obj);
     }
 
+    @FunctionalInterface
     public interface LabelGenerator<T> {
         String generate(T obj);
     }
 
+    @FunctionalInterface
     public interface SearchStringGenerator<T> {
         String generate(T obj);
     }
@@ -131,14 +164,11 @@ public class Autosuggest<T> extends LitTemplate implements HasTheme, HasSize, Fo
     private Map<String, Option> itemsForWhenValueIsNull = new HashMap<>();
     public Map<String, Option> getItemsForWhenValueIsNull() { return this.itemsForWhenValueIsNull; }
 
-    @Id("textField")
-    @SuppressWarnings("unused")
+    private List<Action> dropdownEndActions = new ArrayList<>();
+    public List<Action> getDropdownEndActions() { return this.dropdownEndActions; }
+
     private TextField textField;
     public TextField getTextField() { return this.textField; }
-
-    @Id("dropdownEndSlot")
-    @SuppressWarnings("unused")
-    private Element dropdownEndSlot;
 
     private KeyGenerator<T> keyGenerator = null;
     private LabelGenerator<T> labelGenerator = null;
@@ -172,9 +202,12 @@ public class Autosuggest<T> extends LitTemplate implements HasTheme, HasSize, Fo
      * @param placeClearButtonFirst Should the clear button be placed before the suffix
      */
     public Autosuggest(boolean placeClearButtonFirst) {
-
+        textField = new TextField();
+        textField.setId("textField");
         textField.setSizeFull();
         textField.setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        textField.getElement().setAttribute("slot", "textField");
+        add(textField);
 
         // Init clear button
         initClearButton();
@@ -239,17 +272,6 @@ public class Autosuggest<T> extends LitTemplate implements HasTheme, HasSize, Fo
     public void setInputSuffix(Component... components) {
         inputSuffix.removeAll();
         inputSuffix.add(components);
-    }
-
-    public void clearDropdownEndSlot() {
-        if (dropdownEndSlot != null)
-            dropdownEndSlot.removeAllChildren();
-    }
-
-    public void setComponentToDropdownEndSlot(Component component) {
-        clearDropdownEndSlot();
-        if (dropdownEndSlot != null)
-            dropdownEndSlot.appendChild(component.getElement());
     }
 
     public boolean getShowClearButton() {
@@ -597,6 +619,22 @@ public class Autosuggest<T> extends LitTemplate implements HasTheme, HasSize, Fo
 
     private void clearItems() {
         this.items.clear();
+    }
+
+    public void setDropdownEndActions(Collection<Action> actions) {
+        clearDropdownEndActions();
+        this.dropdownEndActions.addAll(actions);
+        getElement().setPropertyJson("dropdownEndActions",JsonSerializer.toJson(this.dropdownEndActions));
+    }
+
+    private void clearDropdownEndActions() {
+        this.dropdownEndActions.clear();
+    }
+
+    @ClientCallable
+    public void actionClicked(int index) {
+        if (index >= 0 && index < dropdownEndActions.size())
+            dropdownEndActions.get(index).listener.actionClicked(index);
     }
 
     private Option getOption(T item) {

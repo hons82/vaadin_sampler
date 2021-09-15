@@ -7,6 +7,7 @@
 package com.example.application.views.autosuggest;
 
 import com.example.application.views.MainLayout;
+import com.example.application.views.autosuggest.Autosuggest.Action;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -147,7 +148,11 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 		autosuggest12.setLazy(true);
 //        autosuggest12.setLoading(true);
 		autosuggest12.setOpenDropdownOnClick(true);
-		autosuggest12.setComponentToDropdownEndSlot(new HorizontalLayout(new Button("Custom!")));
+//		autosuggest12.setComponentToDropdownEndSlot(new HorizontalLayout(new Button("Custom!")));
+		autosuggest12.setDropdownEndActions(List.of(
+			new Action("Action 1", "search", "", null),
+			new Action("Action 2", "alarm", "", null))
+		);
 		col2.add(new Span("Loading + dropdownEndSlot"), autosuggest12);
 
 		Span inputValue13 = new Span("Current input (lazy) [kw=lazy,avocado]: ");
@@ -188,7 +193,7 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 		Autosuggest<String> autosuggest15 = new Autosuggest<>(5);
 		autosuggest15.setItems(generateItems());
 		autosuggest15.setOpenDropdownOnClick(true);
-		autosuggest15.setComponentToDropdownEndSlot(new HorizontalLayout(new Button("Custom!")));
+		autosuggest15.setDropdownEndActions(List.of(new Autosuggest.Action("Custom", "search", "", key -> System.out.println("Action " + key + " clicked!!!"))));
 		//autosuggest15.setDefaultOption("key", "Default!", "Default! + uselessSearchStr");
 		autosuggest15.setDefaultOption("", "Default!", "Default! + uselessSearchStr");
 		autosuggest15.setSearchMatchingMode(Autosuggest.SearchMatchingMode.CONTAINS);
@@ -285,7 +290,7 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 		autosuggest24.setItems(generateItemsMap());
 		autosuggest24.setOpenDropdownOnClick(true);
 		autosuggest24.setLabelGenerator(item -> item.getName().toLowerCase(Locale.ROOT));
-		autosuggest24.setOptionTemplate("<button class=\"aaa\">${option.label}</button>");
+		autosuggest24.setOptionTemplate("<vaadin-button tabindex=\"-1\" title=\"Bearbeiten\" role=\"button\"><iron-icon icon=\"image:edit\" slot=\"prefix\"></iron-icon>${option.label}</vaadin-button>");
 		col3.add(new Span("Objects + template provider"), autosuggest24);
 
 
