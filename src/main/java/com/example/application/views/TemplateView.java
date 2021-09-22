@@ -32,7 +32,7 @@ public class TemplateView extends Composite<VerticalLayout> {
 		return layout;
 	}
 
-	private Component getTemplateComponent() {
+	private static Component getTemplateComponent() {
 		long startTime = System.currentTimeMillis();
 
 		var template = new TemplateComponent("Template extends Component");
@@ -45,7 +45,7 @@ public class TemplateView extends Composite<VerticalLayout> {
 		return template;
 	}
 
-	private Component getTemplateLit() {
+	private static Component getTemplateLit() {
 		long startTime = System.currentTimeMillis();
 
 		var template = new TemplateLit("Template extends LitTemplate");
@@ -58,7 +58,7 @@ public class TemplateView extends Composite<VerticalLayout> {
 		return template;
 	}
 
-	private Component getTemplatePolymer() {
+	private static Component getTemplatePolymer() {
 		long startTime = System.currentTimeMillis();
 
 		var template = new TemplatePolymer("Template extends PolymerTemplate");
@@ -71,7 +71,7 @@ public class TemplateView extends Composite<VerticalLayout> {
 		return template;
 	}
 
-	private Component getTemplateLitSlotted() {
+	private static Component getTemplateLitSlotted() {
 		long startTime = System.currentTimeMillis();
 
 		var template = new TemplateLitSlotted("Template extends LitTemplate (Slotted)");

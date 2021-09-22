@@ -78,7 +78,7 @@ public class MainLayout extends AppLayout {
 		return layout;
 	}
 
-	private Component createDrawerContent(Tabs menu) {
+	private static Component createDrawerContent(Tabs menu) {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setClassName("sidemenu-menu");
 		layout.setSizeFull();
@@ -106,7 +106,7 @@ public class MainLayout extends AppLayout {
 		return tabs;
 	}
 
-	private List<Tab> createMenuItems() {
+	private static List<Tab> createMenuItems() {
 		MenuItemInfo[] menuItems = new MenuItemInfo[] {
 			new MenuItemInfo("Template", "la la-globe", TemplateView.class),
 			new MenuItemInfo("Autosuggest", "la la-file", AutosuggestView.class),

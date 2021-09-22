@@ -114,17 +114,13 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 		Autosuggest<String> autosuggest10 = new Autosuggest<>();
 		autosuggest10.setItems(generateItems());
 
-		autosuggest10.addEagerInputChangeListener(event -> {
-			inputValue10.setText("Current input: " + autosuggest10.getInputValue());
-		});
+		autosuggest10.addEagerInputChangeListener(event -> inputValue10.setText("Current input: " + autosuggest10.getInputValue()));
 
-		autosuggest10.addValueChangeListener(event -> {
-			selectionValue10.setText("Selection: " + event.getValue());
-		});
-
-		autosuggest10.addValueClearListener(event -> {
-			selectionValue10.setText("Selection: " + "");
-		});
+		autosuggest10.addValueAppliedListener(event -> selectionValue10.setText("Selection: " + event.getValue()));
+//
+//		autosuggest10.addValueClearListener(event -> {
+//			selectionValue10.setText("Selection: " + "");
+//		});
 
 		autosuggest10.setPlaceholder("Search ...");
 		autosuggest10.setThemeName("my-autosuggest");
@@ -157,20 +153,14 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 		Autosuggest<String> autosuggest13 = new Autosuggest<>();
 		autosuggest13.setItems(generateItems());
 		autosuggest13.setLazy(true);
-		autosuggest13.addInputChangeListener(event -> {
-			inputValue13.setText("Current input (lazy) [kw=lazy,avocado]: " + autosuggest13.getInputValue());
-		});
-		autosuggest13.addLazyDataRequestListener(event -> {
-			autosuggest13.setItems(Arrays.asList("lazy avocado 1", "lazy avocado 2", "avocado lazy 3"));
-		});
+		autosuggest13.addInputChangeListener(event -> inputValue13.setText("Current input (lazy) [kw=lazy,avocado]: " + autosuggest13.getInputValue()));
+		autosuggest13.addLazyDataRequestListener(event -> autosuggest13.setItems(Arrays.asList("lazy avocado 1", "lazy avocado 2", "avocado lazy 3")));
 
-		autosuggest13.addValueChangeListener(event -> {
-			selectionValue13.setText("Selection: " + event.getValue());
-		});
+		autosuggest13.addValueAppliedListener(event -> selectionValue13.setText("Selection: " + event.getValue()));
 
-		autosuggest13.addValueClearListener(event -> {
-			selectionValue13.setText("Selection: " + "");
-		});
+//		autosuggest13.addValueClearListener(event -> {
+//			selectionValue13.setText("Selection: " + "");
+//		});
 
 		autosuggest13.setPlaceholder("Search ...");
 		autosuggest13.setThemeName("my-autosuggest");
@@ -229,17 +219,13 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 			try { Thread.sleep(4000); } catch (InterruptedException e) { e.printStackTrace(); }
 			return Arrays.asList("lazy avocado 1", "lazy avocado 2", "avocado lazy 3");
 		});
-		autosuggest18.addInputChangeListener(event -> {
-			inputValue18.setText("Current input (lazy) [kw=lazy,avocado], lambda: " + autosuggest18.getInputValue());
-		});
+		autosuggest18.addInputChangeListener(event -> inputValue18.setText("Current input (lazy) [kw=lazy,avocado], lambda: " + autosuggest18.getInputValue()));
 
-		autosuggest18.addValueChangeListener(event -> {
-			selectionValue18.setText("Selection: " + event.getValue());
-		});
+		autosuggest18.addValueAppliedListener(event -> selectionValue18.setText("Selection: " + event.getValue()));
 
-		autosuggest18.addValueClearListener(event -> {
-			selectionValue18.setText("Selection: " + "");
-		});
+//		autosuggest18.addValueClearListener(event -> {
+//			selectionValue18.setText("Selection: " + "");
+//		});
 
 		autosuggest18.setPlaceholder("Search ...");
 		autosuggest18.setThemeName("my-autosuggest");
@@ -276,7 +262,7 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 		autosuggest22.setLazyProviderSimple(inputValue -> {
 			if(inputValue.trim().isEmpty()) return List.of();
 			try { Thread.sleep(4000); } catch (InterruptedException e) { e.printStackTrace(); }
-			return Arrays.asList(new Fruit("lazy avocado 1"), new Fruit("lazy avocado 2"), new Fruit("avocado lazy 3" ));
+			return Arrays.asList(new Fruit("lazy avocado 1"), new Fruit("lazy avocado 2"), new Fruit("avocado lazy 3"));
 		});
 
 		col3.add(new Span("Objects + lazy + different values for input=null"), autosuggest22);
@@ -329,16 +315,14 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 			int x = 35;
 		});
 
-		field.addInputChangeListener(e -> {
-			iTxt.setText(field.getInputValue());
-		});
+		field.addInputChangeListener(e -> iTxt.setText(field.getInputValue()));
 
-		field.addValueChangeListener(e -> {
+		field.addValueAppliedListener(e -> {
 			Person x = field.getValue();
 			cpTxt.setText(x == null ? "" : x.address);
 		});
 
-		class PersonH extends Person implements Serializable {
+		class PersonH extends Person {
 			@Override
 			public String toString() {
 				return String.format("%d", this.hashCode());
@@ -360,7 +344,7 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 			new PersonH("john", 1.81, "Peace Av."),
 			new PersonH("john", 1.77, "Uphill Rd."),
 			new PersonH("john", 1.74, "Central Av.")));
-		field2.addValueChangeListener(e -> {
+		field2.addValueAppliedListener(e -> {
 			Person x = field2.getValue();
 			cpTxt2.setText(x == null ? "" : x.address);
 		});
@@ -379,6 +363,7 @@ public class AutosuggestOrigView extends Composite<VerticalLayout> {
 	@Data
 	@AllArgsConstructor
 	@ToString
+	static
 	class Fruit {
 		String name;
 	}

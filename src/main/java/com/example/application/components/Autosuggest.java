@@ -127,30 +127,24 @@ public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focu
         public void setDisabled(boolean disabled) { this.disabled = disabled; }
     }
 
-
     public interface LazyProviderFunction {}
 
-    @FunctionalInterface
     public interface LazyProviderFunctionSimple<T> extends LazyProviderFunction {
         List<T> refresh(String searchQ);
     }
 
-    @FunctionalInterface
     public interface LazyProviderFunctionMap<T> extends LazyProviderFunction {
         Map<String, T> refresh(String searchQ);
     }
 
-    @FunctionalInterface
     public interface KeyGenerator<T> {
         String generate(T obj);
     }
 
-    @FunctionalInterface
     public interface LabelGenerator<T> {
         String generate(T obj);
     }
 
-    @FunctionalInterface
     public interface SearchStringGenerator<T> {
         String generate(T obj);
     }
@@ -248,12 +242,7 @@ public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focu
         themeList.add("icon");
         themeList.add("tertiary");
         themeList.add("small");
-        addValueChangeListener(valueChangeEvent -> setClearButtonDisplayStyle(isReadOnly()));
-    }
-
-    @ClientCallable
-    public void clear() {
-        fireEvent(new ValueClearEvent(this, true));
+        addValueAppliedListener(valueAppliedEvent -> setClearButtonDisplayStyle(isReadOnly()));
     }
 
     public void setNoResultsMsg(String msg) {
@@ -484,17 +473,6 @@ public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focu
         return getEventBus().addListener(AutosuggestLazyDataRequestEvent.class, listener);
     }
 
-    /**
-     * Adds a listener for {@code AutosuggestValueAppliedEvent} events fired by the webcomponent.
-     *
-     * @param listener the listener
-     * @return a {@link Registration} for removing the event listener
-     */
-    public Registration addValueChangeListener(
-        ComponentEventListener<AutosuggestValueAppliedEvent> listener) {
-        return addListener(AutosuggestValueAppliedEvent.class, listener);
-    }
-
     public void setDefaultOption(String label) {
         setDefaultOption(label, label, label);
     }
@@ -502,16 +480,6 @@ public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focu
     public void setDefaultOption(String key, String label, String searchStr) {
         getElement().setPropertyJson("defaultOption", JsonSerializer.toJson(new FOption(key, label, searchStr)));
         textField.setValue(label);
-    }
-
-    /**
-     * Adds a listener for {@code ValueClearEvent}.
-     *
-     * @param listener the listener
-     * @return a {@link Registration} for removing the event listener
-     */
-    public Registration addValueClearListener(ComponentEventListener<ValueClearEvent> listener) {
-        return addListener(ValueClearEvent.class, listener);
     }
 
     public void setLazyProviderSimple(LazyProviderFunctionSimple<T> ff) {
@@ -645,14 +613,6 @@ public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focu
         return new Option(key, label, searchStr, item);
     }
 
-    /** ValueClearEvent is created when the user clicks on the clear button. */
-    @DomEvent("clear")
-    public static class ValueClearEvent extends ComponentEvent<Autosuggest<?>> {
-        public ValueClearEvent(Autosuggest<?> source, boolean fromClient) {
-            super(source, fromClient);
-        }
-    }
-
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         textField.setRequiredIndicatorVisible(requiredIndicatorVisible);
     }
@@ -661,6 +621,12 @@ public class Autosuggest<T> extends Component implements HasTheme, HasSize, Focu
         return textField.isRequiredIndicatorVisible();
     }
 
+    /**
+     * Adds a listener for {@code AutosuggestValueAppliedEvent} events fired by the webcomponent.
+     *
+     * @param listener the listener
+     * @return a {@link Registration} for removing the event listener
+     */
     public Registration addValueAppliedListener(ComponentEventListener<AutosuggestValueAppliedEvent> listener) {
         return addListener(AutosuggestValueAppliedEvent.class, listener);
     }

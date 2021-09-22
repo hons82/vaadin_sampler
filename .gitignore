@@ -168,7 +168,6 @@ hs_err_pid*
 
 ### macOS ###
 # General
-.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -211,9 +210,7 @@ buildNumber.properties
 ### Maven Patch ###
 # Eclipse m2e generated files
 # Eclipse Core
-.project
 # JDT-specific (Eclipse Java Development Tools)
-.classpath
 
 ### Node ###
 # Logs
@@ -256,7 +253,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)

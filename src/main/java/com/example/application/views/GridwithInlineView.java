@@ -76,11 +76,11 @@ public class GridwithInlineView extends Composite<VerticalLayout> {
 		maritalStatusField.setOpenDropdownOnClick(true);
 		maritalStatusField.setItems(Arrays.asList(MaritalStatus.values()));
 		maritalStatusField.setKeyGenerator(i -> Integer.toString(i.ordinal()));
-		maritalStatusField.setLabelGenerator(this::getLabel);
+		maritalStatusField.setLabelGenerator(GridwithInlineView::getLabel);
 
 		binder.forField(maritalStatusField.getTextField()).withConverter(
 				isMarried -> isMarried.equalsIgnoreCase("married") ? MaritalStatus.MARRIED : MaritalStatus.SINGLE,
-				marritalStatus -> getLabel(marritalStatus))
+				GridwithInlineView::getLabel)
 			.bind(Person::getMaritalStatus,
 				Person::setMaritalStatus);
 
@@ -128,7 +128,7 @@ public class GridwithInlineView extends Composite<VerticalLayout> {
 		return layout;
 	}
 
-	private String getLabel(MaritalStatus maritalStatus) {
+	private static String getLabel(MaritalStatus maritalStatus) {
 		switch (maritalStatus) {
 		case SINGLE:
 			return "Single";
