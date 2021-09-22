@@ -1,13 +1,8 @@
-/*
- * AutosuggestOrigView  2021-09-08
- *
- * Copyright (c) Pro Data GmbH & ASA KG. All rights reserved.
- */
+package com.example.application.views;
 
-package com.example.application.views.autosuggest;
-
-import com.example.application.views.MainLayout;
-import com.example.application.views.autosuggest.Autosuggest.Action;
+import com.example.application.MainLayout;
+import com.example.application.components.Autosuggest;
+import com.example.application.components.Autosuggest.Action;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;

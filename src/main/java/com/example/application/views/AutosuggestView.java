@@ -1,21 +1,20 @@
-package com.example.application.views.autosuggest;
+package com.example.application.views;
 
+import com.example.application.MainLayout;
+import com.example.application.components.Autosuggest;
 import com.example.application.model.Person;
-import com.example.application.service.PersonService;
-import com.example.application.views.MainLayout;
+import com.example.application.services.PersonService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 
 import java.util.List;
 
 @PageTitle("Autosuggest")
 @Route(value = "autosuggest", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 @NpmPackage(value = "@polymer/iron-icons", version = "3.0.1")
 @JsModule("@polymer/iron-icons/iron-icons.js")
 public class AutosuggestView extends Composite<VerticalLayout> {
@@ -53,6 +52,5 @@ public class AutosuggestView extends Composite<VerticalLayout> {
 		layout.setSizeFull();
 		return layout;
 	}
-
 }
 

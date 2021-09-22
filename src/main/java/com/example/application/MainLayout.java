@@ -1,8 +1,9 @@
-package com.example.application.views;
+package com.example.application;
 
-import com.example.application.views.autosuggest.AutosuggestOrigView;
-import com.example.application.views.autosuggest.AutosuggestView;
-import com.example.application.views.gridwithinline.GridwithInlineView;
+import com.example.application.views.AutosuggestOrigView;
+import com.example.application.views.AutosuggestView;
+import com.example.application.views.GridwithInlineView;
+import com.example.application.views.TemplateView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.Text;
@@ -107,6 +108,7 @@ public class MainLayout extends AppLayout {
 
 	private List<Tab> createMenuItems() {
 		MenuItemInfo[] menuItems = new MenuItemInfo[] {
+			new MenuItemInfo("Template", "la la-globe", TemplateView.class),
 			new MenuItemInfo("Autosuggest", "la la-file", AutosuggestView.class),
 			new MenuItemInfo("AutosuggestOrig", "la la-file", AutosuggestOrigView.class),
 			new MenuItemInfo("Grid with Inline", "la la-file", GridwithInlineView.class),

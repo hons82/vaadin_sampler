@@ -1,4 +1,4 @@
-package com.example.application.service;
+package com.example.application.services;
 
 import com.example.application.model.Person;
 import com.example.application.model.PersonData;

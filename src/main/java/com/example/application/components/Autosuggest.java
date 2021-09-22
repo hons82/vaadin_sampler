@@ -1,4 +1,4 @@
-package com.example.application.views.autosuggest;
+package com.example.application.components;
 
 /*
  * #%L

@@ -1,10 +1,10 @@
-package com.example.application.views.gridwithinline;
+package com.example.application.views;
 
+import com.example.application.MainLayout;
+import com.example.application.components.Autosuggest;
 import com.example.application.model.Person;
 import com.example.application.model.Person.MaritalStatus;
-import com.example.application.service.PersonService;
-import com.example.application.views.MainLayout;
-import com.example.application.views.autosuggest.Autosuggest;
+import com.example.application.services.PersonService;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
