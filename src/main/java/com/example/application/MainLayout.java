@@ -5,6 +5,7 @@ import com.example.application.views.AutosuggestView;
 import com.example.application.views.DialogView;
 import com.example.application.views.GridwithInlineView;
 import com.example.application.views.TemplateView;
+import com.example.application.views.UploadS3View;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.Text;
@@ -109,6 +110,7 @@ public class MainLayout extends AppLayout {
 
 	private static List<Tab> createMenuItems() {
 		MenuItemInfo[] menuItems = new MenuItemInfo[] {
+			new MenuItemInfo("Upload", "la la-globe", UploadS3View.class),
 			new MenuItemInfo("Dialog", "la la-globe", DialogView.class),
 			new MenuItemInfo("Template", "la la-globe", TemplateView.class),
 			new MenuItemInfo("Autosuggest", "la la-file", AutosuggestView.class),
