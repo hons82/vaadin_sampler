@@ -2,6 +2,7 @@ vcf-autosuggest-overlay [part='options-container'] {
     margin-left: 0.5em;
     margin-right: 0.5em;
     min-width: var(--vcf-autosuggest-options-width);
+    max-width: var(--vcf-autosuggest-options-width-max);
 }
 
 vcf-autosuggest-overlay [part="options-container"] vaadin-item::before {
@@ -30,6 +31,7 @@ vcf-autosuggest-overlay [part='loading-indicator'] {
 }
 
 vcf-autosuggest-overlay [part='option'] {
+	display: block;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 }

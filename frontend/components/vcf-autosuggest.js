@@ -191,7 +191,6 @@ class VcfAutosuggest extends LitElement {
         this._dropdownEndSlot = this.shadowRoot.getElementById('dropdownEndSlot');
         this._dropdownEndSlot.addEventListener('click', ev => { this._cancelEvent(ev); });
         this._defaultOptionChanged(this.defaultOption);
-        this.addEventListener('iron-resize', this._boundSetOverlayPosition);
         this.addEventListener('click', this._elementClickListener);
         this.addEventListener('blur', this._elementBlurListener);
         this.addEventListener('keydown', this._onKeyDown.bind(this));
@@ -258,9 +257,11 @@ class VcfAutosuggest extends LitElement {
             this._setOverlayPosition();
             this._refreshOptionsToDisplay(this.options, this.inputValue);
             window.addEventListener('scroll', this._boundSetOverlayPosition, true);
+			window.addEventListener('resize', this._boundSetOverlayPosition, true);
             this._textField.addEventListener('wheel', this._cancelEvent, true);
         } else {
             window.removeEventListener('scroll', this._boundSetOverlayPosition, true);
+			window.removeEventListener('resize', this._boundSetOverlayPosition, true);
             this._textField.removeEventListener('wheel', this._cancelEvent, true);
         }
     }
@@ -268,9 +269,12 @@ class VcfAutosuggest extends LitElement {
     _setOverlayPosition() {
         const inputRect = this._textField.getBoundingClientRect();
         if (this._overlayElement != null) {
-            this._overlayElement.style.left = inputRect.left + 'px';
+			let overlayWidth = this._overlayElement.getBoundingClientRect().right - this._overlayElement.getBoundingClientRect().left;
+			let leftOffset = Math.max(inputRect.left + overlayWidth - window.innerWidth, 0);
+            this._overlayElement.style.left = Math.max(inputRect.left - leftOffset, 0) + 'px';
             this._overlayElement.style.top = inputRect.bottom + window.pageYOffset + 'px';
             this._overlayElement.updateStyles({ '--vcf-autosuggest-options-width': inputRect.width + 'px' });
+			this._overlayElement.updateStyles({ '--vcf-autosuggest-options-width-max': window.innerWidth + 'px' });
         }
     }
 
@@ -309,11 +313,11 @@ class VcfAutosuggest extends LitElement {
     }
 
     _optionClicked(ev) {
-        this._applyValue(ev.target.dataset.key);
+        this._applyValue(ev.currentTarget.dataset.key);
     }
 
     _actionClicked(ev) {
-        this.$server.actionClicked(ev.target.dataset.index);
+        this.$server.actionClicked(ev.currentTarget.dataset.index);
         this._textFieldFocus(false);
         this.opened = false;
         this._cancelEvent(ev);
