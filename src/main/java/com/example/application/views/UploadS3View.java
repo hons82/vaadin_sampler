@@ -1,13 +1,8 @@
-/*
- * DialogView  2021-10-04
- *
- * Copyright (c) Pro Data GmbH & ASA KG. All rights reserved.
- */
-
 package com.example.application.views;
 
 import com.example.application.MainLayout;
 import com.example.application.components.UploadS3;
+import com.example.application.services.AwsS3Service;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,23 +18,18 @@ import org.springframework.beans.factory.annotation.Value;
 @CssImport(value = "./components/dialog-layout.css", themeFor = "vaadin-dialog-overlay")
 public class UploadS3View extends Composite<VerticalLayout> {
 
-	private final String accessKey;
-	private final String secretKey;
-	private final String bucketName;
+	private final UploadS3 upload;
 
 	public UploadS3View(@Value("${aws.accessKey}") String accessKey,
 		@Value("${aws.secretKey}") String secretKey,
 		@Value("${aws.s3bucket.name}") String bucketName)
 	{
-		this.accessKey = accessKey;
-		this.secretKey = secretKey;
-		this.bucketName = bucketName;
+		var service = new AwsS3Service(accessKey, secretKey, bucketName);
+		this.upload = new UploadS3(service);
 	}
 
 	@Override
 	protected VerticalLayout initContent() {
-		UploadS3 upload = new UploadS3(accessKey, secretKey, bucketName);
-
 		var layout = new VerticalLayout(upload);
 		layout.addClassName("centered-content");
 		layout.setSizeFull();

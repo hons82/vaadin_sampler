@@ -1,9 +1,3 @@
-/*
- * DialogView  2021-10-04
- *
- * Copyright (c) Pro Data GmbH & ASA KG. All rights reserved.
- */
-
 package com.example.application.views;
 
 import com.example.application.MainLayout;
