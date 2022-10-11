@@ -8,13 +8,11 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 
 import org.springframework.beans.factory.annotation.Value;
 
 @PageTitle("UploadS3")
 @Route(value = "uploads3", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 @CssImport(value = "./components/dialog-layout.css", themeFor = "vaadin-dialog-overlay")
 public class UploadS3View extends Composite<VerticalLayout> {
 

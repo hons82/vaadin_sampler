@@ -3,6 +3,7 @@ package com.example.application;
 import com.example.application.views.AutosuggestOrigView;
 import com.example.application.views.AutosuggestView;
 import com.example.application.views.DialogView;
+import com.example.application.views.GridWithVariableColumns;
 import com.example.application.views.GridwithInlineView;
 import com.example.application.views.TemplateView;
 import com.example.application.views.UploadS3View;
@@ -18,12 +19,14 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.shared.ui.Transport;
 import com.vaadin.flow.theme.Theme;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ import java.util.Optional;
  */
 @PWA(name = "Playground", shortName = "Playground", enableInstallPrompt = false)
 @Theme(themeFolder = "playground")
+@Push(transport = Transport.LONG_POLLING)
 @PageTitle("Main")
 public class MainLayout extends AppLayout {
 
@@ -116,6 +120,7 @@ public class MainLayout extends AppLayout {
 			new MenuItemInfo("Autosuggest", "la la-file", AutosuggestView.class),
 			new MenuItemInfo("AutosuggestOrig", "la la-file", AutosuggestOrigView.class),
 			new MenuItemInfo("Grid with Inline", "la la-file", GridwithInlineView.class),
+			new MenuItemInfo("Grid with variable Columns", "la la-file", GridWithVariableColumns.class),
 		};
 		List<Tab> tabs = new ArrayList<>();
 		for (MenuItemInfo menuItemInfo : menuItems) {

@@ -340,21 +340,25 @@ public class AwsS3Service {
 					WaiterResponse<HeadBucketResponse> waiterResponse = s3.waiter()
 						.waitUntilBucketExists(bucketRequestWait);
 					waiterResponse.matched().response().ifPresent(System.out::println);
-					s3.putPublicAccessBlock(
-						PutPublicAccessBlockRequest.builder().publicAccessBlockConfiguration(
-							PublicAccessBlockConfiguration.builder()
-								.blockPublicPolicy(true)
-								.blockPublicAcls(true)
-								.ignorePublicAcls(true)
-								.restrictPublicBuckets(true)
-								.build()
-						).bucket(bucketName).build()
-					);
+					restrictAccess();
 				}
 				catch (S3Exception e) {
 					System.err.println(e.awsErrorDetails());
 				}
 			}
+		}
+
+		private void restrictAccess() throws S3Exception {
+			s3.putPublicAccessBlock(
+				PutPublicAccessBlockRequest.builder().publicAccessBlockConfiguration(
+					PublicAccessBlockConfiguration.builder()
+						.blockPublicPolicy(true)
+						.blockPublicAcls(true)
+						.ignorePublicAcls(true)
+						.restrictPublicBuckets(true)
+						.build()
+				).bucket(bucketName).build()
+			);
 		}
 
 		private boolean doesBucketExist() {
