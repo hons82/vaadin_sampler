@@ -11,7 +11,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +23,6 @@ import java.util.stream.Stream;
 
 @PageTitle("Grid with Variable Columns")
 @Route(value = "grid_columns", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class GridWithVariableColumns extends Composite<VerticalLayout> {
 
 	private final ExecutorService executor;
