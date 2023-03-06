@@ -19,15 +19,11 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.shared.ui.Transport;
-import com.vaadin.flow.theme.Theme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +32,6 @@ import java.util.Optional;
 /**
  * The main view is a top-level placeholder for other views.
  */
-@PWA(name = "Playground", shortName = "Playground", enableInstallPrompt = false)
-@Theme(themeFolder = "playground")
-@Push(transport = Transport.LONG_POLLING)
-@PageTitle("Main")
 public class MainLayout extends AppLayout {
 
 	private final Tabs menu;
