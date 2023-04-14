@@ -12,6 +12,7 @@
     <properties>
         <java.version>11</java.version>
         <vaadin.version>23.3.5</vaadin.version>
+        <aws.version>2.20.23</aws.version>
     </properties>
 
     <parent>
@@ -36,6 +37,13 @@
             <id>vaadin-addons</id>
             <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
+        <!-- Pre-Releases repository -->
+        <repository>
+            <id>vaadin-prereleases</id>
+            <url>
+                https://maven.vaadin.com/vaadin-prereleases/
+            </url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -47,6 +55,14 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <!-- Pre-Releases repository -->
+        <pluginRepository>
+            <id>vaadin-prereleases</id>
+            <url>
+                https://maven.vaadin.com/vaadin-prereleases/
+            </url>
+        </pluginRepository>
+
     </pluginRepositories>
 
     <dependencyManagement>
@@ -164,12 +180,12 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>iam</artifactId>
-            <version>2.17.122</version>
+            <version>${aws.version}</version>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
-            <version>2.17.122</version>
+            <version>${aws.version}</version>
         </dependency>
     </dependencies>
 

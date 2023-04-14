@@ -24,7 +24,7 @@ public class DialogView  extends Composite<VerticalLayout> {
 	public DialogView() {
 	}
 
-	private Component[] getComponents(int size) {
+	public static Component[] getComponents(int size) {
 		var result = new Component[size];
 		for (int i = 0; i < size; i++) {
 			var c = new TextField("Component" + i, "Enter value for " + i);

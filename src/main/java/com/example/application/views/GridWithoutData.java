@@ -9,14 +9,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 @PageTitle("Grid without Data")
 @Route(value = "grid_empty", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class GridWithoutData extends Composite<VerticalLayout> {
 
 	@Override
