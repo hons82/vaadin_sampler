@@ -10,6 +10,14 @@ public class PersonService {
 
 	private PersonData personData = new PersonData();
 
+	public PersonService() {
+		personData = new PersonData();
+	}
+
+	public PersonService(int start, int size) {
+		personData = new PersonData(start, size);
+	}
+
 	public List<Person> fetch(int offset, int limit) {
 		int end = offset + limit;
 		int size = personData.getPersons().size();

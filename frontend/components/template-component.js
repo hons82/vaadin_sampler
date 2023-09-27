@@ -15,7 +15,7 @@
  */
 
 import { LitElement, html, css } from 'lit-element';
-import '@vaadin/vaadin-text-field';
+import '@vaadin/text-field';
 
 class TemplateComponent extends LitElement {
 

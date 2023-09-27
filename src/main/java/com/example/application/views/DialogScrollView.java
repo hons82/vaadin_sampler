@@ -10,11 +10,9 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 
 @PageTitle("DialogScroll")
 @Route(value = "dialogscroll", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class DialogScrollView extends Composite<VerticalLayout> {
 
 	@Override
@@ -29,6 +27,7 @@ public class DialogScrollView extends Composite<VerticalLayout> {
 		var toolbar = new HorizontalLayout(new H2("Title"));
 
 		var scrollable = new VerticalLayout(DialogView.getComponents(300));
+		scrollable.setMaxHeight("1000px");
 		scrollable.getStyle().set("overflow", "auto");
 
 		var dLayout = new VerticalLayout(toolbar, scrollable);

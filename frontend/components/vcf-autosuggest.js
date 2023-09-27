@@ -15,10 +15,10 @@
  */
 
 import { LitElement, html, css } from 'lit-element';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-list-box';
-import '@vaadin/vaadin-item';
-import '@vaadin/vaadin-overlay';
+import '@vaadin/text-field';
+import '@vaadin/list-box';
+import '@vaadin/item';
+import '@vaadin/overlay';
 import '@polymer/iron-icon/iron-icon.js';
 import './vcf-autosuggest-overlay';
 

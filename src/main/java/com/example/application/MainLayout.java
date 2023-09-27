@@ -3,6 +3,7 @@ package com.example.application;
 import com.example.application.views.AutosuggestOrigView;
 import com.example.application.views.AutosuggestView;
 import com.example.application.views.DialogView;
+import com.example.application.views.GridView;
 import com.example.application.views.GridWithVariableColumns;
 import com.example.application.views.GridWithoutData;
 import com.example.application.views.GridwithInlineView;
@@ -110,6 +111,7 @@ public class MainLayout extends AppLayout {
 			new MenuItemInfo("Autosuggest", "la la-file", AutosuggestView.class),
 			new MenuItemInfo("AutosuggestOrig", "la la-file", AutosuggestOrigView.class),
 			new MenuItemInfo("Dialog", "la la-globe", DialogView.class),
+			new MenuItemInfo("Grid", "la la-file", GridView.class),
 			new MenuItemInfo("Grid with Inline", "la la-file", GridwithInlineView.class),
 			new MenuItemInfo("Grid without Data", "la la-file", GridWithoutData.class),
 			new MenuItemInfo("Grid with variable Columns", "la la-file", GridWithVariableColumns.class),

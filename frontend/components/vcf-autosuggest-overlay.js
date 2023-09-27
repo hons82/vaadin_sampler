@@ -7,7 +7,7 @@
  */
 
  import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
- import { OverlayElement } from '@vaadin/vaadin-overlay/src/vaadin-overlay';
+ import { Overlay } from '@vaadin/overlay';
 
  registerStyles(
    'vcf-autosuggest-overlay',
@@ -18,7 +18,6 @@
        right: auto;
        position: absolute;
        bottom: auto;
-       background: #fff;
      }
 
      [part='content'] {
@@ -26,9 +25,8 @@
      }
 
      [part='overlay'] {
-       background-color: var(--lumo-base-color);
-       background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-tint-5pct));
-       border-radius: var(--lumo-border-radius);
+       background-image: linear-gradient(var(--g14-elevation-color-m),var(--g14-elevation-color-m));
+       border: 1px solid var(--g14-border-color);
        box-shadow: 0 0 0 1px var(--lumo-shade-5pct), var(--lumo-box-shadow-m);
      }
    `
@@ -52,9 +50,10 @@
   * @extends OverlayElement
   * @demo demo/index.html
   */
- class AutosuggestOverlayElement extends OverlayElement {
+ export class AutosuggestOverlayElement extends Overlay {
      static get is() {
          return 'vcf-autosuggest-overlay';
      }
  }
+
  customElements.define(AutosuggestOverlayElement.is, AutosuggestOverlayElement);

@@ -15,7 +15,7 @@
  */
 
 import { html, PolymerElement } from '@polymer/polymer/polymer-element';
-import '@vaadin/vaadin-text-field';
+import '@vaadin/text-field';
 
 class TemplatePolymer extends PolymerElement {
 

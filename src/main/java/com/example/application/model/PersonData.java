@@ -8,6 +8,18 @@ import java.util.List;
 
 public class PersonData {
 
+	private final int start;
+	private final int size;
+
+	public PersonData() {
+		this(91, 100);
+	}
+
+	public PersonData(int start, int size) {
+		this.start = start;
+		this.size = size;
+	}
+
 	private static final String[] names = new String[] {
 		"Aaron", "Adam", "Addison", "Alexis", "Alyssa", "Andrew", "Anna",
 		"Anton", "Arianna", "Audrey", "Ava", "Avery", "Ayden", "Bentley", "Brandon", "Brayden", "Brody", "Brooklyn",
@@ -70,7 +82,7 @@ public class PersonData {
 
 	public List<Person> getPersons() {
 		if (people.isEmpty()) {
-			for (int i = 91; i <= 199; i++) {
+			for (int i = start; i <= start + size; i++) {
 				final int age = ages[i % ages.length];
 				people.add(new Person(i, names[i % names.length],
 					surnames[i % surnames.length], age,
