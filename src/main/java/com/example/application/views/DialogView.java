@@ -13,9 +13,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 
 @PageTitle("Dialog")
 @Route(value = "dialog", layout = MainLayout.class)
+@RouteAlias(value = "", layout = MainLayout.class)
 @CssImport(value = "./components/dialog-layout.css", themeFor = "vaadin-dialog-overlay")
 public class DialogView  extends Composite<VerticalLayout> {
 
@@ -40,7 +42,23 @@ public class DialogView  extends Composite<VerticalLayout> {
 
 		var button2 = hideDialog();
 
-		var layout = new VerticalLayout(button1, button2);
+		var text1 = new TextField("Perform a value Change here");
+		text1.addValueChangeListener(event -> {
+			var dLayout = new VerticalLayout(getComponents(10));
+			dLayout.setSizeFull();
+
+			var dialog = new Dialog();
+			dialog.setMinWidth("600px");
+			dialog.add(dLayout);
+			dialog.setCloseOnOutsideClick(true);
+			dialog.open();
+		});
+
+		var text2 = new TextField("Klick here after value change");
+
+		var textLayout = new HorizontalLayout(text1, text2);
+
+		var layout = new VerticalLayout(button1, button2, textLayout);
 		layout.setSizeFull();
 		return layout;
 	}
@@ -96,7 +114,7 @@ public class DialogView  extends Composite<VerticalLayout> {
 		return button;
 	}
 
-	private Button simpleDialog() {
+	private static Button simpleDialog() {
 
 		System.out.println("Init simple dialog");
 

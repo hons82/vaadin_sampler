@@ -11,14 +11,12 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
 @PageTitle("Grid")
 @Route(value = "grid", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class GridView extends Composite<VerticalLayout> {
 
 	private Grid<Person> grid;
